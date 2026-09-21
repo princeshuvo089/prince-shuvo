@@ -21,19 +21,17 @@ if (!fs.existsSync(sitesDir)) fs.mkdirSync(sitesDir, { recursive: true });
 
 const upload = multer({ dest: uploadsDir });
 
-// ১. ফ্রন্টএন্ড UI
+// Frontend UI
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ২. ইউনিভার্সাল আপলোড API (সরাসরি কোড ও ফাইল উভয় সাপোর্ট করে)
+// Upload API (Supports both code and files)
 app.post('/upload', upload.any(), (req, res) => {
     try {
         let siteName = req.body.siteName ? req.body.siteName.trim().toLowerCase().replace(/[^a-z0-9-]/g, '') : '';
-        if (!siteName) {
-            siteName = 'site-' + uuidv4().slice(0, 6);
-        }
+        if (!siteName) siteName = 'site-' + uuidv4().slice(0, 6);
 
         if (['upload', 'sites', 'public', 'api'].includes(siteName)) {
-            return res.status(400).json({ success: false, error: 'এই নামটি ব্যবহার করা যাবে না, অন্য নাম দিন।' });
+            return res.status(400).json({ success: false, error: 'অন্য একটি নাম দিন।' });
         }
 
         const targetDir = path.join(sitesDir, siteName);
@@ -43,79 +41,56 @@ app.post('/upload', upload.any(), (req, res) => {
         const host = req.get('host');
         const liveUrl = `${protocol}://${host}/${siteName}`;
 
-        // সরাসরি কোড সাবমিট করলে
+        // Case 1: Direct HTML Code typed
         if (req.body.htmlCode && req.body.htmlCode.trim().length > 0) {
-            const destPath = path.join(targetDir, 'index.html');
-            fs.writeFileSync(destPath, req.body.htmlCode.trim(), 'utf8');
-            return res.json({
-                success: true,
-                message: 'কোড সফলভাবে হোস্ট ও লাইভ হয়েছে!',
-                url: liveUrl
-            });
+            fs.writeFileSync(path.join(targetDir, 'index.html'), req.body.htmlCode.trim(), 'utf8');
+            return res.json({ success: true, message: 'লাইভ হয়েছে!', url: liveUrl });
         }
 
-        // ফাইল আপলোড করলে
+        // Case 2: File uploaded
         const file = req.files && req.files.length > 0 ? req.files[0] : null;
         if (!file) {
-            return res.status(400).json({ success: false, error: 'দয়া করে ফাইল সিলেক্ট করুন অথবা কোড লিখুন।' });
+            return res.status(400).json({ success: false, error: 'ফাইল বা কোড দিন।' });
         }
 
-        const originalName = file.originalname.toLowerCase();
-
-        if (originalName.endsWith('.zip')) {
+        const name = file.originalname.toLowerCase();
+        if (name.endsWith('.zip')) {
             fs.createReadStream(file.path)
                 .pipe(unzipper.Extract({ path: targetDir }))
                 .on('close', () => {
                     fs.unlink(file.path, () => {});
-                    return res.json({
-                        success: true,
-                        message: 'ZIP ওয়েবসাইট সফলভাবে হোস্ট হয়েছে!',
-                        url: liveUrl
-                    });
+                    res.json({ success: true, message: 'লাইভ হয়েছে!', url: liveUrl });
                 })
                 .on('error', () => {
                     fs.unlink(file.path, () => {});
-                    return res.status(500).json({ success: false, error: 'ZIP আনজিপ করতে সমস্যা হয়েছে।' });
+                    res.status(500).json({ success: false, error: 'আনজিপ এরর।' });
                 });
-        } else if (originalName.endsWith('.html') || originalName.endsWith('.htm')) {
-            const destPath = path.join(targetDir, 'index.html');
-            fs.copyFileSync(file.path, destPath);
+        } else if (name.endsWith('.html') || name.endsWith('.htm')) {
+            fs.copyFileSync(file.path, path.join(targetDir, 'index.html'));
             fs.unlink(file.path, () => {});
-            return res.json({
-                success: true,
-                message: 'HTML ফাইল সফলভাবে হোস্ট হয়েছে!',
-                url: liveUrl
-            });
+            res.json({ success: true, message: 'লাইভ হয়েছে!', url: liveUrl });
         } else {
             fs.unlink(file.path, () => {});
-            return res.status(400).json({ success: false, error: 'শুধুমাত্র .HTML অথবা .ZIP ফাইল সাপোর্ট করবে!' });
+            res.status(400).json({ success: false, error: 'শুধুমাত্র HTML বা ZIP।' });
         }
-    } catch (err) {
-        return res.status(500).json({ success: false, error: 'সার্ভারে সমস্যা হয়েছে।' });
+    } catch (e) {
+        res.status(500).json({ success: false, error: 'সার্ভার এরর।' });
     }
 });
 
-// ৩. শর্ট ইউআরএল রাউটিং (/sitename)
+// Short URL routing: /sitename
 app.get('/:siteName', (req, res, next) => {
-    const siteName = req.params.siteName.toLowerCase();
-    const sitePath = path.join(sitesDir, siteName);
-    if (fs.existsSync(sitePath)) {
-        return res.redirect(301, `/${siteName}/`);
-    }
+    const p = path.join(sitesDir, req.params.siteName.toLowerCase());
+    if (fs.existsSync(p)) return res.redirect(301, `/${req.params.siteName.toLowerCase()}/`);
     next();
 });
 
 app.use('/:siteName', (req, res, next) => {
-    const siteName = req.params.siteName.toLowerCase();
-    const sitePath = path.join(sitesDir, siteName);
-    if (fs.existsSync(sitePath)) {
-        return express.static(sitePath)(req, res, next);
-    }
+    const p = path.join(sitesDir, req.params.siteName.toLowerCase());
+    if (fs.existsSync(p)) return express.static(p)(req, res, next);
     next();
 });
 
 app.use('/sites', express.static(sitesDir));
 
-app.listen(PORT, () => {
-    console.log(`PRINCE SHUVO Engine active on port ${PORT}`);
-});
+app.listen(PORT, () => console.log('Server is running on port ' + PORT));
