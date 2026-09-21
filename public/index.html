@@ -7,7 +7,7 @@
     <link rel="icon" href="https://cdn.imgchest.com/files/86b04a61c070.png">
     
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -37,18 +37,15 @@
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 490px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* ==========================================================================
-           PROFESSIONAL FLOATING TOP NAVBAR (LOGO + 3-LINE HAMBURGER)
-           ========================================================================== */
+        /* Top Floating Navbar */
         .top-navbar {
             width: 100%;
-            max-width: 480px;
             background: rgba(18, 18, 30, 0.85);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
@@ -59,7 +56,7 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.04);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 100;
         }
@@ -113,7 +110,6 @@
             text-transform: uppercase;
         }
 
-        /* 3-Line Hamburger Button */
         .menu-btn {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -129,14 +125,13 @@
             transition: all 0.3s ease;
         }
 
-        .menu-btn:hover, .menu-btn:active {
+        .menu-btn:hover {
             background: rgba(255, 0, 127, 0.2);
             border-color: #ff007f;
             color: #00f2fe;
-            transform: scale(1.05);
         }
 
-        /* Slide-Down Menu Drawer */
+        /* Drawer */
         .nav-drawer {
             position: absolute;
             top: 72px;
@@ -147,23 +142,14 @@
             border-radius: 20px;
             padding: 16px;
             backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
             display: none;
             flex-direction: column;
             gap: 10px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 0, 127, 0.2);
-            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
             z-index: 99;
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .nav-drawer.open {
-            display: flex;
-        }
+        .nav-drawer.open { display: flex; }
 
         .drawer-link {
             display: flex;
@@ -184,7 +170,6 @@
             background: rgba(255, 0, 127, 0.15);
             border-color: #ff007f;
             color: #fff;
-            transform: translateX(4px);
         }
 
         .drawer-link.highlight {
@@ -222,18 +207,15 @@
             50% { opacity: 0.4; transform: scale(0.85); }
         }
 
-        /* ==========================================================================
-           MAIN CARD & FORM CONTROLS
-           ========================================================================== */
+        /* Main Card */
         .card {
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
-            padding: 28px 22px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.03);
+            padding: 26px 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
         }
@@ -252,7 +234,7 @@
             font-size: 20px;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             color: #fff;
         }
 
@@ -260,8 +242,42 @@
             font-size: 13px;
             color: #cbd5e1;
             text-align: center;
-            margin-bottom: 22px;
-            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* 🔘 Mode Switcher Tabs (নতুন অপশন) */
+        .mode-tabs {
+            display: flex;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 4px;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 12px;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(255, 0, 127, 0.35), rgba(0, 242, 254, 0.35));
+            border: 1px solid rgba(255, 0, 127, 0.6);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .form-group {
@@ -293,6 +309,7 @@
             box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
         }
 
+        /* Upload Area */
         .upload-area {
             border: 2px dashed rgba(255, 0, 127, 0.4);
             background: rgba(255, 0, 127, 0.03);
@@ -300,8 +317,8 @@
             padding: 24px 15px;
             text-align: center;
             cursor: pointer;
-            transition: 0.3s;
             position: relative;
+            transition: 0.3s;
         }
 
         .upload-area:hover {
@@ -327,33 +344,36 @@
             margin-bottom: 8px;
         }
 
-        .file-chosen-text {
+        /* ✍️ Direct Code Textarea */
+        .code-area-box {
+            display: none;
+        }
+
+        .code-textarea {
+            width: 100%;
+            height: 180px;
+            padding: 14px;
+            background: rgba(10, 14, 28, 0.85);
+            border: 1.5px solid rgba(0, 242, 254, 0.35);
+            border-radius: 14px;
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            font-weight: 600;
-            color: #f1f5f9;
+            line-height: 1.5;
+            outline: none;
+            resize: vertical;
+            transition: 0.3s;
         }
 
-        .supported-tags {
-            margin-top: 8px;
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .tag-pill {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #38ef7d;
+        .code-textarea:focus {
+            border-color: #ff007f;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.35);
         }
 
         .btn-submit {
             width: 100%;
             padding: 16px;
             background: linear-gradient(45deg, #ff007f, #7928ca, #00f2fe);
-            background-size: 200% 200%;
             border: none;
             border-radius: 14px;
             color: #fff;
@@ -367,13 +387,6 @@
             justify-content: center;
             gap: 10px;
             margin-top: 10px;
-            animation: gradientBtn 4s ease infinite;
-        }
-
-        @keyframes gradientBtn {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .btn-submit:hover {
@@ -387,18 +400,13 @@
             transform: none;
         }
 
+        /* Result */
         #result {
             margin-top: 20px;
             display: none;
             padding: 16px;
             border-radius: 14px;
             text-align: center;
-            animation: popUp 0.3s ease;
-        }
-
-        @keyframes popUp {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
         }
 
         .res-success {
@@ -484,17 +492,15 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .s-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-        }
+        .s-btn:hover { transform: translateY(-3px) scale(1.03); }
 
-        .s-yt { background: linear-gradient(45deg, #cc0000, #ff0000); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .s-fb { background: linear-gradient(45deg, #1877f2, #0052cc); box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3); }
-        .s-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3); }
-        .s-tt { background: linear-gradient(45deg, #000000, #25f4ee, #fe2c55); box-shadow: 0 4px 15px rgba(37, 244, 238, 0.2); }
-        .s-tg { background: linear-gradient(45deg, #0088cc, #229ed9); box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3); }
-        .s-wa { background: linear-gradient(45deg, #128c7e, #25d366); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-        .s-gm { background: linear-gradient(45deg, #ea4335, #c5221f); box-shadow: 0 4px 15px rgba(234, 67, 53, 0.3); }
+        .s-yt { background: linear-gradient(45deg, #cc0000, #ff0000); }
+        .s-fb { background: linear-gradient(45deg, #1877f2, #0052cc); }
+        .s-ig { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+        .s-tt { background: linear-gradient(45deg, #000000, #25f4ee, #fe2c55); }
+        .s-tg { background: linear-gradient(45deg, #0088cc, #229ed9); }
+        .s-wa { background: linear-gradient(45deg, #128c7e, #25d366); }
+        .s-gm { background: linear-gradient(45deg, #ea4335, #c5221f); }
 
         footer {
             margin-top: 30px;
@@ -514,9 +520,7 @@
 
     <div class="container">
 
-        <!-- ==========================================================================
-             TOP PROFESSIONAL NAVBAR (LOGO + PRINCE SHUVO + 3-LINE HAMBURGER)
-             ========================================================================== -->
+        <!-- Top Floating Navbar -->
         <header class="top-navbar">
             <a href="#" class="nav-brand">
                 <div class="nav-logo-box">
@@ -560,27 +564,40 @@
         <!-- Main Card -->
         <div class="card">
             <h2>ওয়েবসাইট লাইভ হোস্ট করুন 🚀</h2>
-            <p>আপনার <b>.HTML ফাইল</b> অথবা পুরো <b>.ZIP প্যাকেজ</b> এখানে আপলোড করে ১ ক্লিকেই ওয়েবসাইট লাইভ করুন!</p>
+            <p>ফাইল আপলোড করুন অথবা সরাসরি HTML কোড পেস্ট করে সাইট লাইভ করুন!</p>
+
+            <!-- 🔘 Mode Switcher Tabs -->
+            <div class="mode-tabs">
+                <button type="button" class="tab-btn active" id="tabUpload">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> ফাইল আপলোড
+                </button>
+                <button type="button" class="tab-btn" id="tabCode">
+                    <i class="fa-solid fa-code"></i> সরাসরি কোড লিখুন
+                </button>
+            </div>
 
             <form id="uploadForm">
                 
                 <div class="form-group">
-                    <label for="siteName">ওয়েবসাইটের নাম (Site Name):</label>
+                    <label for="siteName">ওয়েবসাইটের নাম (Site Identifier):</label>
                     <input type="text" id="siteName" placeholder="যেমন: my-portfolio" required autocomplete="off">
                 </div>
 
-                <div class="form-group">
-                    <label>ওয়েবসাইট ফাইল সিলেক্ট করুন:</label>
+                <!-- Option 1: File Upload Box -->
+                <div class="form-group" id="fileGroup">
+                    <label>ওয়েবসাইট ফাইল (.HTML বা .ZIP):</label>
                     <div class="upload-area">
-                        <!-- HTML ও ZIP উভয় ফাইল সাপোর্ট করবে -->
-                        <input type="file" id="websiteFile" accept=".zip,.html,.htm" required>
+                        <input type="file" id="websiteFile" accept=".zip,.html,.htm">
                         <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
                         <div class="file-chosen-text" id="fileStatusText">ক্লিক করে ফাইল সিলেক্ট করুন</div>
-                        <div class="supported-tags">
-                            <span class="tag-pill">📄 Single HTML</span>
-                            <span class="tag-pill">📦 Full ZIP</span>
-                        </div>
+                        <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Single .HTML অথবা Full .ZIP প্যাকেজ</div>
                     </div>
+                </div>
+
+                <!-- Option 2: Direct Code Editor Box -->
+                <div class="form-group code-area-box" id="codeGroup">
+                    <label for="htmlCode">আপনার HTML কোড এখানে পেস্ট বা টাইপ করুন:</label>
+                    <textarea id="htmlCode" class="code-textarea" placeholder="<!DOCTYPE html>&#10;<html>&#10;<head>&#10;  <title>My Website</title>&#10;</head>&#10;<body>&#10;  <h1>Hello World!</h1>&#10;</body>&#10;</html>"></textarea>
                 </div>
 
                 <button type="submit" id="submitBtn" class="btn-submit">
@@ -599,27 +616,13 @@
                 <i class="fa-solid fa-fire"></i> Connect with Prince Shuvo
             </div>
             <div class="social-buttons">
-                <a href="https://youtube.com/@PrinceEarningZone" target="_blank" class="s-btn s-yt">
-                    <i class="fa-brands fa-youtube"></i> YouTube
-                </a>
-                <a href="https://www.facebook.com/share/1CLcHHhvtY/" target="_blank" class="s-btn s-fb">
-                    <i class="fa-brands fa-facebook"></i> Facebook
-                </a>
-                <a href="https://www.instagram.com/princeshuvo.official/" target="_blank" class="s-btn s-ig">
-                    <i class="fa-brands fa-instagram"></i> Instagram
-                </a>
-                <a href="https://www.tiktok.com/@princeshuvo.officials" target="_blank" class="s-btn s-tt">
-                    <i class="fa-brands fa-tiktok"></i> TikTok
-                </a>
-                <a href="https://t.me/PrinceEarningZone" target="_blank" class="s-btn s-tg">
-                    <i class="fa-brands fa-telegram"></i> Telegram
-                </a>
-                <a href="https://wa.me/8801768250665" target="_blank" class="s-btn s-wa">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="mailto:sprinceshuvo.official@gmail.com" class="s-btn s-gm">
-                    <i class="fa-solid fa-envelope"></i> Email
-                </a>
+                <a href="https://youtube.com/@PrinceEarningZone" target="_blank" class="s-btn s-yt"><i class="fa-brands fa-youtube"></i> YouTube</a>
+                <a href="https://www.facebook.com/share/1CLcHHhvtY/" target="_blank" class="s-btn s-fb"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                <a href="https://www.instagram.com/princeshuvo.official/" target="_blank" class="s-btn s-ig"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="https://www.tiktok.com/@princeshuvo.officials" target="_blank" class="s-btn s-tt"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+                <a href="https://t.me/PrinceEarningZone" target="_blank" class="s-btn s-tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                <a href="https://wa.me/8801768250665" target="_blank" class="s-btn s-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                <a href="mailto:sprinceshuvo.official@gmail.com" class="s-btn s-gm"><i class="fa-solid fa-envelope"></i> Email</a>
             </div>
         </div>
 
@@ -632,7 +635,7 @@
 
     <!-- Script -->
     <script>
-        // 3-Line Menu Drawer Toggle
+        // 3-Line Menu Drawer
         const menuToggle = document.getElementById('menuToggle');
         const navDrawer = document.getElementById('navDrawer');
 
@@ -647,12 +650,32 @@
             }
         });
 
-        // Core Upload Logic (100% Intact)
+        // Tab Switching Logic
+        const tabUpload = document.getElementById('tabUpload');
+        const tabCode = document.getElementById('tabCode');
+        const fileGroup = document.getElementById('fileGroup');
+        const codeGroup = document.getElementById('codeGroup');
+        let currentMode = 'upload'; // 'upload' or 'code'
+
+        tabUpload.addEventListener('click', () => {
+            currentMode = 'upload';
+            tabUpload.classList.add('active');
+            tabCode.classList.remove('active');
+            fileGroup.style.display = 'block';
+            codeGroup.style.display = 'none';
+        });
+
+        tabCode.addEventListener('click', () => {
+            currentMode = 'code';
+            tabCode.classList.add('active');
+            tabUpload.classList.remove('active');
+            fileGroup.style.display = 'none';
+            codeGroup.style.display = 'block';
+        });
+
+        // File Selection Feedback
         const fileInput = document.getElementById('websiteFile');
         const fileStatusText = document.getElementById('fileStatusText');
-        const uploadForm = document.getElementById('uploadForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const resultDiv = document.getElementById('result');
 
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
@@ -663,17 +686,33 @@
             }
         });
 
+        // Submit API Execution
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const siteName = document.getElementById('siteName').value.trim();
-            const file = fileInput.files[0];
-
-            if (!file) return;
-
             const formData = new FormData();
             formData.append('siteName', siteName);
-            formData.append('websiteFile', file);
+
+            if (currentMode === 'upload') {
+                const file = fileInput.files[0];
+                if (!file) {
+                    alert('দয়া করে একটি HTML অথবা ZIP ফাইল সিলেক্ট করুন!');
+                    return;
+                }
+                formData.append('websiteFile', file);
+            } else {
+                const code = document.getElementById('htmlCode').value.trim();
+                if (!code) {
+                    alert('দয়া করে আপনার HTML কোড বক্সে পেস্ট বা লিখুন!');
+                    return;
+                }
+                formData.append('htmlCode', code);
+            }
 
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>হোস্ট হচ্ছে, অপেক্ষা করুন...</span>';
