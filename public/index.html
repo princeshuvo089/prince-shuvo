@@ -22,18 +22,17 @@
         body {
             background: #090919;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(255, 0, 128, 0.25) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(0, 242, 254, 0.25) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(121, 40, 202, 0.2) 0px, transparent 60%),
-                radial-gradient(at 100% 100%, rgba(255, 75, 43, 0.2) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(79, 172, 254, 0.2) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(255, 0, 128, 0.22) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 242, 254, 0.22) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(121, 40, 202, 0.18) 0px, transparent 60%),
+                radial-gradient(at 100% 100%, rgba(255, 75, 43, 0.18) 0px, transparent 50%);
             background-attachment: fixed;
             color: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 25px 16px 50px 16px;
+            padding: 18px 16px 50px 16px;
         }
 
         .container {
@@ -45,144 +44,173 @@
         }
 
         /* ==========================================================================
-           UPGRADED LUXURY AVATAR & BRAND HEADER
+           PROFESSIONAL FLOATING TOP NAVBAR (LOGO + 3-LINE HAMBURGER)
            ========================================================================== */
-        .brand-header {
+        .top-navbar {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(18, 18, 30, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50px;
+            padding: 10px 18px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            margin-bottom: 25px;
-            text-align: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.04);
+            margin-bottom: 24px;
             position: relative;
+            z-index: 100;
         }
 
-        .avatar-master-box {
-            position: relative;
-            margin-bottom: 14px;
-            display: inline-flex;
+        .nav-brand {
+            display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
         }
 
-        /* Ambient Glow behind Avatar */
-        .avatar-glow-halo {
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff007f, #00f2fe);
-            filter: blur(22px);
-            opacity: 0.65;
-            z-index: 1;
-            animation: pulseHalo 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseHalo {
-            0% { transform: scale(0.95); opacity: 0.5; }
-            100% { transform: scale(1.1); opacity: 0.85; }
-        }
-
-        /* Cyber Ring Frame */
-        .avatar-ring-frame {
+        .nav-logo-box {
             position: relative;
-            z-index: 2;
-            width: 96px;
-            height: 96px;
-            border-radius: 50%;
-            padding: 4px;
-            background: linear-gradient(135deg, #ff007f, #7928ca, #00f2fe);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.2);
-            transition: all 0.35s ease;
+            width: 40px;
+            height: 40px;
         }
 
-        .avatar-ring-frame:hover {
-            transform: scale(1.05);
-        }
-
-        .logo-img {
+        .nav-logo {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #090919;
-            background: #090919;
-            display: block;
+            border: 2px solid #ff007f;
+            box-shadow: 0 0 14px rgba(255, 0, 127, 0.6);
         }
 
-        /* Royal Crown Badge */
-        .founder-crown {
+        .nav-verified-badge {
             position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #f59e0b, #fbbf24);
-            color: #000;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.8);
-            border: 2px solid #090919;
-            z-index: 3;
-            animation: crownBounce 2.5s ease-in-out infinite;
-        }
-
-        @keyframes crownBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-3px); }
-        }
-
-        /* Verified Checkmark Badge */
-        .verified-badge {
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
+            bottom: -2px;
+            right: -2px;
             background: #00f2fe;
             color: #030712;
-            width: 24px;
-            height: 24px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 8px;
+            border: 1.5px solid #090919;
             font-weight: 800;
-            border: 2.5px solid #090919;
-            box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
-            z-index: 3;
         }
 
-        .brand-title {
-            font-size: 28px;
+        .nav-title {
+            font-size: 16px;
             font-weight: 800;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, #ff007f, #ff758c, #00f2fe);
+            letter-spacing: 0.8px;
+            background: linear-gradient(45deg, #ff007f, #00f2fe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
         }
 
-        .brand-tag {
-            font-size: 12px;
+        /* 3-Line Hamburger Button */
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover, .menu-btn:active {
+            background: rgba(255, 0, 127, 0.2);
+            border-color: #ff007f;
+            color: #00f2fe;
+            transform: scale(1.05);
+        }
+
+        /* Slide-Down Menu Drawer */
+        .nav-drawer {
+            position: absolute;
+            top: 72px;
+            left: 0;
+            right: 0;
+            background: rgba(14, 14, 26, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 16px;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 0, 127, 0.2);
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 99;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-drawer.open {
+            display: flex;
+        }
+
+        .drawer-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: 0.25s;
+        }
+
+        .drawer-link:hover {
+            background: rgba(255, 0, 127, 0.15);
+            border-color: #ff007f;
+            color: #fff;
+            transform: translateX(4px);
+        }
+
+        .drawer-link.highlight {
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+            border-color: #06b6d4;
+            color: #38bdf8;
+        }
+
+        /* Status Badge */
+        .status-pill {
+            font-size: 11px;
             font-weight: 700;
             color: #38ef7d;
             background: rgba(56, 239, 125, 0.12);
             border: 1px solid rgba(56, 239, 125, 0.35);
             padding: 4px 14px;
             border-radius: 20px;
-            margin-top: 6px;
+            margin-bottom: 20px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            letter-spacing: 0.5px;
         }
 
         .live-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: #38ef7d;
             border-radius: 50%;
             box-shadow: 0 0 10px #38ef7d;
@@ -221,7 +249,7 @@
         }
 
         .card h2 {
-            font-size: 21px;
+            font-size: 20px;
             font-weight: 700;
             text-align: center;
             margin-bottom: 6px;
@@ -410,9 +438,7 @@
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         }
 
-        /* ==========================================================================
-           COLORFUL SOCIAL MEDIA HUB
-           ========================================================================== */
+        /* Social Box */
         .social-card {
             width: 100%;
             margin-top: 25px;
@@ -488,28 +514,47 @@
 
     <div class="container">
 
-        <!-- Upgraded Luxury Brand Header -->
-        <div class="brand-header">
-            <div class="avatar-master-box">
-                <div class="avatar-glow-halo"></div>
-                <div class="avatar-ring-frame">
-                    <img src="https://cdn.imgchest.com/files/86b04a61c070.png" alt="Prince Shuvo" class="logo-img">
+        <!-- ==========================================================================
+             TOP PROFESSIONAL NAVBAR (LOGO + PRINCE SHUVO + 3-LINE HAMBURGER)
+             ========================================================================== -->
+        <header class="top-navbar">
+            <a href="#" class="nav-brand">
+                <div class="nav-logo-box">
+                    <img src="https://cdn.imgchest.com/files/86b04a61c070.png" alt="Prince Shuvo" class="nav-logo">
+                    <div class="nav-verified-badge"><i class="fa-solid fa-check"></i></div>
                 </div>
-                <!-- Royal Gold Crown -->
-                <div class="founder-crown" title="Founder & Owner">
-                    <i class="fa-solid fa-crown"></i>
-                </div>
-                <!-- Official Blue Verified Tick -->
-                <div class="verified-badge" title="Verified Founder">
-                    <i class="fa-solid fa-check"></i>
-                </div>
-            </div>
+                <span class="nav-title">PRINCE SHUVO</span>
+            </a>
 
-            <h1 class="brand-title">PRINCE SHUVO</h1>
-            <div class="brand-tag">
-                <div class="live-dot"></div>
-                Free Cloud Hosting
+            <!-- 3-Line Button -->
+            <button class="menu-btn" id="menuToggle" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <!-- Dropdown Menu Drawer -->
+            <div class="nav-drawer" id="navDrawer">
+                <a href="https://princeshuvo.page.gd" target="_blank" class="drawer-link highlight">
+                    <i class="fa-solid fa-user-astronaut"></i> Official Website (princeshuvo.page.gd) ↗
+                </a>
+                <a href="https://youtube.com/@PrinceEarningZone" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-youtube" style="color: #ff0000;"></i> YouTube Channel
+                </a>
+                <a href="https://t.me/PrinceEarningZone" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-telegram" style="color: #229ed9;"></i> Telegram Channel
+                </a>
+                <a href="https://wa.me/8801768250665" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Direct
+                </a>
+                <a href="https://www.facebook.com/share/1CLcHHhvtY/" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook Profile
+                </a>
             </div>
+        </header>
+
+        <!-- Status Pill -->
+        <div class="status-pill">
+            <div class="live-dot"></div>
+            Free Cloud Hosting Engine Active
         </div>
 
         <!-- Main Card -->
@@ -585,15 +630,30 @@
 
     </div>
 
-    <!-- Script (All Upload Functions 100% Intact) -->
+    <!-- Script -->
     <script>
+        // 3-Line Menu Drawer Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navDrawer = document.getElementById('navDrawer');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navDrawer.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navDrawer.contains(e.target) && e.target !== menuToggle) {
+                navDrawer.classList.remove('open');
+            }
+        });
+
+        // Core Upload Logic (100% Intact)
         const fileInput = document.getElementById('websiteFile');
         const fileStatusText = document.getElementById('fileStatusText');
         const uploadForm = document.getElementById('uploadForm');
         const submitBtn = document.getElementById('submitBtn');
         const resultDiv = document.getElementById('result');
 
-        // File Selection Listener
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
@@ -603,7 +663,6 @@
             }
         });
 
-        // Form Submit
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
