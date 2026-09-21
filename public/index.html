@@ -44,33 +44,115 @@
             align-items: center;
         }
 
-        /* Top Brand Header */
+        /* ==========================================================================
+           UPGRADED LUXURY AVATAR & BRAND HEADER
+           ========================================================================== */
         .brand-header {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 25px;
             text-align: center;
+            position: relative;
         }
 
-        .logo-container {
+        .avatar-master-box {
             position: relative;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ambient Glow behind Avatar */
+        .avatar-glow-halo {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff007f, #00f2fe);
+            filter: blur(22px);
+            opacity: 0.65;
+            z-index: 1;
+            animation: pulseHalo 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseHalo {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 0.85; }
+        }
+
+        /* Cyber Ring Frame */
+        .avatar-ring-frame {
+            position: relative;
+            z-index: 2;
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, #ff007f, #7928ca, #00f2fe);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.2);
+            transition: all 0.35s ease;
+        }
+
+        .avatar-ring-frame:hover {
+            transform: scale(1.05);
         }
 
         .logo-img {
-            width: 85px;
-            height: 85px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #ff007f;
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.6), 0 0 50px rgba(0, 242, 254, 0.4);
-            animation: float 4s ease-in-out infinite;
+            border: 2px solid #090919;
+            background: #090919;
+            display: block;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+        /* Royal Crown Badge */
+        .founder-crown {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: #000;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.8);
+            border: 2px solid #090919;
+            z-index: 3;
+            animation: crownBounce 2.5s ease-in-out infinite;
+        }
+
+        @keyframes crownBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-3px); }
+        }
+
+        /* Verified Checkmark Badge */
+        .verified-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: #00f2fe;
+            color: #030712;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            border: 2.5px solid #090919;
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
+            z-index: 3;
         }
 
         .brand-title {
@@ -84,17 +166,18 @@
         }
 
         .brand-tag {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             color: #38ef7d;
             background: rgba(56, 239, 125, 0.12);
-            border: 1px solid rgba(56, 239, 125, 0.3);
-            padding: 3px 14px;
+            border: 1px solid rgba(56, 239, 125, 0.35);
+            padding: 4px 14px;
             border-radius: 20px;
-            margin-top: 5px;
+            margin-top: 6px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            letter-spacing: 0.5px;
         }
 
         .live-dot {
@@ -103,9 +186,17 @@
             background: #38ef7d;
             border-radius: 50%;
             box-shadow: 0 0 10px #38ef7d;
+            animation: dotPing 1.8s infinite;
         }
 
-        /* Main Glass Card */
+        @keyframes dotPing {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* ==========================================================================
+           MAIN CARD & FORM CONTROLS
+           ========================================================================== */
         .card {
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
@@ -119,7 +210,6 @@
             overflow: hidden;
         }
 
-        /* Rainbow Top Border */
         .card::before {
             content: '';
             position: absolute;
@@ -175,7 +265,6 @@
             box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
         }
 
-        /* Drop Area */
         .upload-area {
             border: 2px dashed rgba(255, 0, 127, 0.4);
             background: rgba(255, 0, 127, 0.03);
@@ -232,7 +321,6 @@
             color: #38ef7d;
         }
 
-        /* Glowing Colorful Button */
         .btn-submit {
             width: 100%;
             padding: 16px;
@@ -271,7 +359,6 @@
             transform: none;
         }
 
-        /* Result Area */
         #result {
             margin-top: 20px;
             display: none;
@@ -323,7 +410,9 @@
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         }
 
-        /* Colorful Social Media Hub */
+        /* ==========================================================================
+           COLORFUL SOCIAL MEDIA HUB
+           ========================================================================== */
         .social-card {
             width: 100%;
             margin-top: 25px;
@@ -373,7 +462,6 @@
             transform: translateY(-3px) scale(1.03);
         }
 
-        /* Individual Colorful Buttons */
         .s-yt { background: linear-gradient(45deg, #cc0000, #ff0000); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
         .s-fb { background: linear-gradient(45deg, #1877f2, #0052cc); box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3); }
         .s-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3); }
@@ -400,14 +488,26 @@
 
     <div class="container">
 
-        <!-- Brand Top -->
+        <!-- Upgraded Luxury Brand Header -->
         <div class="brand-header">
-            <div class="logo-container">
-                <img src="https://cdn.imgchest.com/files/86b04a61c070.png" alt="Prince Shuvo" class="logo-img">
+            <div class="avatar-master-box">
+                <div class="avatar-glow-halo"></div>
+                <div class="avatar-ring-frame">
+                    <img src="https://cdn.imgchest.com/files/86b04a61c070.png" alt="Prince Shuvo" class="logo-img">
+                </div>
+                <!-- Royal Gold Crown -->
+                <div class="founder-crown" title="Founder & Owner">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <!-- Official Blue Verified Tick -->
+                <div class="verified-badge" title="Verified Founder">
+                    <i class="fa-solid fa-check"></i>
+                </div>
             </div>
+
             <h1 class="brand-title">PRINCE SHUVO</h1>
             <div class="brand-tag">
-                <div class="live-ping live-dot"></div>
+                <div class="live-dot"></div>
                 Free Cloud Hosting
             </div>
         </div>
@@ -427,7 +527,7 @@
                 <div class="form-group">
                     <label>ওয়েবসাইট ফাইল সিলেক্ট করুন:</label>
                     <div class="upload-area">
-                        <!-- HTML ও ZIP উভয় ফাইল সিলেক্ট করা যাবে -->
+                        <!-- HTML ও ZIP উভয় ফাইল সাপোর্ট করবে -->
                         <input type="file" id="websiteFile" accept=".zip,.html,.htm" required>
                         <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
                         <div class="file-chosen-text" id="fileStatusText">ক্লিক করে ফাইল সিলেক্ট করুন</div>
@@ -485,7 +585,7 @@
 
     </div>
 
-    <!-- Script -->
+    <!-- Script (All Upload Functions 100% Intact) -->
     <script>
         const fileInput = document.getElementById('websiteFile');
         const fileStatusText = document.getElementById('fileStatusText');
