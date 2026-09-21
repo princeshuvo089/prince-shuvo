@@ -38,6 +38,9 @@
 
         body {
             background-color: var(--bg-void);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 0, 127, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 242, 254, 0.1) 0%, transparent 45%);
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
@@ -48,7 +51,6 @@
             position: relative;
         }
 
-        /* Ambient Luxury Glow */
         .ambient-glow-1 {
             position: absolute;
             top: -100px;
@@ -62,19 +64,6 @@
             z-index: 0;
         }
 
-        .ambient-glow-2 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%);
-            filter: blur(100px);
-            pointer-events: none;
-            z-index: 0;
-        }
-
         .container {
             width: 100%;
             max-width: 560px;
@@ -82,7 +71,7 @@
             z-index: 1;
         }
 
-        /* Navigation / Identity Bar */
+        /* Navigation */
         .luxury-nav {
             display: flex;
             align-items: center;
@@ -181,7 +170,7 @@
             75%, 100% { transform: scale(1.8); opacity: 0; }
         }
 
-        /* Hero Text */
+        /* Hero */
         .hero-section {
             text-align: center;
             margin-bottom: 28px;
@@ -223,7 +212,7 @@
             line-height: 1.6;
         }
 
-        /* Executive Hosting Card */
+        /* Console Card */
         .console-card {
             background: var(--surface-card);
             border: 1px solid var(--border-glow);
@@ -295,13 +284,13 @@
             color: var(--accent-cyan);
         }
 
-        /* Luxury File Dropzone */
+        /* Universal Dropzone */
         .dropzone-box {
             position: relative;
             border: 1.5px dashed rgba(255, 255, 255, 0.16);
             background: rgba(3, 7, 18, 0.5);
             border-radius: 18px;
-            padding: 30px 15px;
+            padding: 26px 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -335,7 +324,6 @@
             font-size: 20px;
             color: var(--accent-cyan);
             margin-bottom: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .drop-primary-txt {
@@ -350,7 +338,24 @@
             color: var(--text-dim);
         }
 
-        /* Expensive CTA Button */
+        .badge-types {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .badge-chip {
+            font-size: 10px;
+            padding: 3px 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            color: #cbd5e1;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Launch Button */
         .btn-launch {
             width: 100%;
             padding: 16px;
@@ -363,8 +368,6 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
             box-shadow: 0 8px 30px rgba(139, 92, 246, 0.35);
             transition: all 0.3s ease;
             display: flex;
@@ -379,17 +382,13 @@
             box-shadow: 0 12px 35px rgba(236, 72, 153, 0.45);
         }
 
-        .btn-launch:active {
-            transform: translateY(0);
-        }
-
         .btn-launch:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
 
-        /* Success & Deployment Terminal */
+        /* Result Box */
         #resultTerminal {
             display: none;
             margin-top: 24px;
@@ -397,7 +396,7 @@
             border: 1px solid var(--border-glow);
             border-radius: 16px;
             padding: 20px;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideUp 0.4s ease;
         }
 
         @keyframes slideUp {
@@ -437,13 +436,8 @@
             margin-bottom: 14px;
         }
 
-        .action-actions {
-            display: flex;
-            gap: 10px;
-        }
-
         .btn-visit {
-            flex: 1;
+            width: 100%;
             padding: 12px;
             background: #10b981;
             color: #fff;
@@ -458,11 +452,7 @@
             gap: 6px;
         }
 
-        /* Official Network / Bento Grid */
-        .network-section {
-            margin-top: 10px;
-        }
-
+        /* Official Network Bento */
         .section-headline {
             display: flex;
             align-items: center;
@@ -505,9 +495,7 @@
             flex-direction: column;
             justify-content: space-between;
             min-height: 100px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .bento-card:hover {
@@ -539,9 +527,7 @@
             margin-right: 14px;
         }
 
-        .bento-info {
-            flex: 1;
-        }
+        .bento-info { flex: 1; }
 
         .bento-name {
             font-size: 14px;
@@ -552,23 +538,9 @@
             gap: 6px;
         }
 
-        .bento-sub {
-            font-size: 11px;
-            color: var(--text-dim);
-        }
+        .bento-sub { font-size: 11px; color: var(--text-dim); }
+        .bento-arrow { color: var(--text-dim); font-size: 13px; }
 
-        .bento-arrow {
-            color: var(--text-dim);
-            font-size: 13px;
-            transition: 0.3s;
-        }
-
-        .bento-card:hover .bento-arrow {
-            color: #fff;
-            transform: translate(2px, -2px);
-        }
-
-        /* Specific Brand Color Highlights */
         .icon-yt { color: #ff0033; background: rgba(255, 0, 51, 0.1); }
         .icon-fb { color: #1877f2; background: rgba(24, 119, 242, 0.1); }
         .icon-ig { color: #e4405f; background: rgba(228, 64, 95, 0.1); }
@@ -586,19 +558,16 @@
             color: var(--text-dim);
         }
 
-        footer strong {
-            color: var(--text-muted);
-        }
+        footer strong { color: var(--text-muted); }
     </style>
 </head>
 <body>
 
     <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
 
     <div class="container">
 
-        <!-- Luxury Navigation -->
+        <!-- Top Navigation -->
         <header class="luxury-nav">
             <a href="#" class="brand-profile">
                 <div class="logo-wrapper">
@@ -622,7 +591,7 @@
                 <i class="fa-solid fa-bolt"></i> High-Speed Edge Deployment
             </div>
             <h2 class="hero-title">হোস্ট করুন আপনার ওয়েবসাইট<br>পলকেই পুরো বিশ্বে</h2>
-            <p class="hero-desc">HTML, CSS, JS ও রিসোর্সযুক্ত ZIP ফাইল ড্রপ করুন। কোনো সার্ভার সেটআপ ছাড়াই সরাসরি লাইভ লিংক পান।</p>
+            <p class="hero-desc">একক <b>HTML</b> ফাইল বা সম্পূর্ণ <b>.ZIP</b> প্রজেক্ট ড্রপ করুন। কোনো সার্ভার কনফিগ ছাড়াই সরাসরি লাইভ লিংক পান।</p>
         </div>
 
         <!-- Master Workspace Card -->
@@ -645,16 +614,21 @@
 
                 <div class="field-group">
                     <div class="field-label">
-                        <span>ওয়েবসাইট প্যাকেজ (.ZIP)</span>
+                        <span>ওয়েবসাইট ফাইল (.HTML বা .ZIP)</span>
                         <span style="font-size: 11px; color: var(--text-dim);">Max 50MB</span>
                     </div>
                     <div class="dropzone-box" id="dropzone">
-                        <input type="file" id="websiteZip" accept=".zip" required>
+                        <!-- .html এবং .zip উভয়ই সাপোর্ট করবে -->
+                        <input type="file" id="websiteFile" accept=".zip,.html,.htm" required>
                         <div class="drop-icon-sphere">
                             <i class="fa-solid fa-arrow-up-from-bracket"></i>
                         </div>
-                        <div class="drop-primary-txt" id="fileStatusText">এখানে ফাইল ড্রপ বা সিলেক্ট করুন</div>
-                        <div class="drop-secondary-txt" id="fileSubText">শুধুমাত্র .ZIP আর্কাইভ সাপোর্ট করবে</div>
+                        <div class="drop-primary-txt" id="fileStatusText">ফাইল ড্রপ বা ব্রাউজ করুন</div>
+                        <div class="drop-secondary-txt" id="fileSubText">একটি .HTML ফাইল অথবা সম্পূর্ণ .ZIP প্যাকেজ</div>
+                        <div class="badge-types">
+                            <span class="badge-chip">📄 .HTML</span>
+                            <span class="badge-chip">📦 .ZIP</span>
+                        </div>
                     </div>
                 </div>
 
@@ -692,11 +666,8 @@
 
             <div class="bento-grid">
                 
-                <!-- YouTube (Full Width) -->
                 <a href="https://youtube.com/@PrinceEarningZone" target="_blank" class="bento-card full-width">
-                    <div class="bento-icon icon-yt">
-                        <i class="fa-brands fa-youtube"></i>
-                    </div>
+                    <div class="bento-icon icon-yt"><i class="fa-brands fa-youtube"></i></div>
                     <div class="bento-info">
                         <div class="bento-name">Prince Earning Zone <i class="fa-solid fa-circle-check" style="font-size: 11px; color: #0ea5e9;"></i></div>
                         <div class="bento-sub">অফিসিয়াল ইউটিউব চ্যানেল • Subscribe Now</div>
@@ -704,60 +675,45 @@
                     <i class="fa-solid fa-arrow-up-right-from-square bento-arrow"></i>
                 </a>
 
-                <!-- Telegram -->
                 <a href="https://t.me/PrinceEarningZone" target="_blank" class="bento-card">
                     <div>
-                        <div class="bento-icon icon-tg">
-                            <i class="fa-brands fa-telegram"></i>
-                        </div>
+                        <div class="bento-icon icon-tg"><i class="fa-brands fa-telegram"></i></div>
                         <div class="bento-name">Telegram</div>
                         <div class="bento-sub">VIP Updates & Community</div>
                     </div>
                     <i class="fa-solid fa-arrow-right bento-arrow" style="align-self: flex-end;"></i>
                 </a>
 
-                <!-- WhatsApp -->
                 <a href="https://wa.me/8801768250665" target="_blank" class="bento-card">
                     <div>
-                        <div class="bento-icon icon-wa">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </div>
+                        <div class="bento-icon icon-wa"><i class="fa-brands fa-whatsapp"></i></div>
                         <div class="bento-name">WhatsApp</div>
                         <div class="bento-sub">Direct Founder Support</div>
                     </div>
                     <i class="fa-solid fa-arrow-right bento-arrow" style="align-self: flex-end;"></i>
                 </a>
 
-                <!-- Facebook -->
                 <a href="https://www.facebook.com/share/1CLcHHhvtY/" target="_blank" class="bento-card">
                     <div>
-                        <div class="bento-icon icon-fb">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </div>
+                        <div class="bento-icon icon-fb"><i class="fa-brands fa-facebook-f"></i></div>
                         <div class="bento-name">Facebook</div>
                         <div class="bento-sub">Official Profile & Page</div>
                     </div>
                     <i class="fa-solid fa-arrow-right bento-arrow" style="align-self: flex-end;"></i>
                 </a>
 
-                <!-- Instagram -->
                 <a href="https://www.instagram.com/princeshuvo.official/" target="_blank" class="bento-card">
                     <div>
-                        <div class="bento-icon icon-ig">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
+                        <div class="bento-icon icon-ig"><i class="fa-brands fa-instagram"></i></div>
                         <div class="bento-name">Instagram</div>
                         <div class="bento-sub">@princeshuvo.official</div>
                     </div>
                     <i class="fa-solid fa-arrow-right bento-arrow" style="align-self: flex-end;"></i>
                 </a>
 
-                <!-- TikTok & Email (Dual Strip) -->
                 <a href="https://www.tiktok.com/@princeshuvo.officials" target="_blank" class="bento-card">
                     <div>
-                        <div class="bento-icon icon-tt">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </div>
+                        <div class="bento-icon icon-tt"><i class="fa-brands fa-tiktok"></i></div>
                         <div class="bento-name">TikTok</div>
                         <div class="bento-sub">Official Content Hub</div>
                     </div>
@@ -766,9 +722,7 @@
 
                 <a href="mailto:sprinceshuvo.official@gmail.com" class="bento-card">
                     <div>
-                        <div class="bento-icon icon-mail">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
+                        <div class="bento-icon icon-mail"><i class="fa-solid fa-envelope"></i></div>
                         <div class="bento-name">Inquiries</div>
                         <div class="bento-sub">Official Email Desk</div>
                     </div>
@@ -778,7 +732,7 @@
             </div>
         </div>
 
-        <!-- High-End Luxury Footer -->
+        <!-- Footer -->
         <footer>
             <p>&copy; 2026 <strong>PRINCE SHUVO</strong>. All Rights Reserved.</p>
             <p style="margin-top: 4px; font-size: 11px;">Powered by Enterprise Node.js Architecture</p>
@@ -786,11 +740,11 @@
 
     </div>
 
-    <!-- Core Script -->
+    <!-- Script -->
     <script>
         const siteInput = document.getElementById('siteName');
         const previewSlug = document.getElementById('previewSlug');
-        const fileInput = document.getElementById('websiteZip');
+        const fileInput = document.getElementById('websiteFile');
         const fileStatusText = document.getElementById('fileStatusText');
         const fileSubText = document.getElementById('fileSubText');
         const uploadForm = document.getElementById('uploadForm');
@@ -799,7 +753,7 @@
         const liveUrlBox = document.getElementById('liveUrlBox');
         const liveVisitLink = document.getElementById('liveVisitLink');
 
-        // Dynamic Real-time Subdomain Preview
+        // Dynamic Subdomain Preview
         siteInput.addEventListener('input', (e) => {
             const cleanVal = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
             previewSlug.innerText = cleanVal || 'my-portfolio';
@@ -809,12 +763,15 @@
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
+                const isZip = file.name.endsWith('.zip');
+                const typeIcon = isZip ? '📦 ZIP প্যাকেজ' : '📄 HTML ফাইল';
+                
                 fileStatusText.innerHTML = `<span style="color: var(--accent-cyan)">${file.name}</span>`;
-                fileSubText.innerText = `${(file.size / (1024 * 1024)).toFixed(2)} MB • আপলোডের জন্য প্রস্তুত`;
+                fileSubText.innerText = `${typeIcon} • ${(file.size / 1024).toFixed(1)} KB • আপলোডের জন্য তৈরি`;
             }
         });
 
-        // Submit API Execution
+        // Form Submit
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -825,7 +782,7 @@
 
             const formData = new FormData();
             formData.append('siteName', siteName);
-            formData.append('websiteZip', file);
+            formData.append('websiteFile', file);
 
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>সার্ভারে ফাইল প্রসেসিং হচ্ছে...</span>`;
