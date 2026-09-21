@@ -1,121 +1,755 @@
-const express = require('express');
-const multer = require('multer');
-const unzipper = require('unzipper');
-const fs = require('fs');
-const path = require('path');
-const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PRINCE SHUVO | Free & Fast Web Hosting</title>
+    <link rel="icon" href="https://cdn.imgchest.com/files/86b04a61c070.png">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+        body {
+            background: #090919;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 0, 128, 0.22) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 242, 254, 0.22) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(121, 40, 202, 0.18) 0px, transparent 60%),
+                radial-gradient(at 100% 100%, rgba(255, 75, 43, 0.18) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px 16px 50px 16px;
+        }
 
-const uploadsDir = path.join(__dirname, 'uploads');
-const sitesDir = path.join(__dirname, 'hosted_sites');
+        .container {
+            width: 100%;
+            max-width: 490px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-if (!fs.existsSync(sitesDir)) fs.mkdirSync(sitesDir, { recursive: true });
+        /* Top Floating Navbar */
+        .top-navbar {
+            width: 100%;
+            background: rgba(18, 18, 30, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.04);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 100;
+        }
 
-const upload = multer({ dest: uploadsDir });
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
 
-// ১. মূল হোস্টিং প্ল্যাটফর্মের ফ্রন্টএন্ড
-app.use(express.static(path.join(__dirname, 'public')));
+        .nav-logo-box {
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
 
-// ২. ফাইল আপলোড API
-app.post('/upload', upload.any(), (req, res) => {
-    const file = req.files && req.files.length > 0 ? req.files[0] : null;
+        .nav-logo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ff007f;
+            box-shadow: 0 0 14px rgba(255, 0, 127, 0.6);
+        }
 
-    if (!file) {
-        return res.status(400).json({ success: false, error: 'কোনো ফাইল পাওয়া যায়নি। দয়া করে ফাইল সিলেক্ট করুন।' });
-    }
+        .nav-verified-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #00f2fe;
+            color: #030712;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            border: 1.5px solid #090919;
+            font-weight: 800;
+        }
 
-    let siteName = req.body.siteName ? req.body.siteName.trim().toLowerCase().replace(/[^a-z0-9-]/g, '') : '';
-    if (!siteName) {
-        siteName = 'site-' + uuidv4().slice(0, 6);
-    }
+        .nav-title {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            background: linear-gradient(45deg, #ff007f, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
 
-    // রিজার্ভ নাম ব্লক করা
-    if (siteName === 'upload' || siteName === 'sites' || siteName === 'public') {
-        return res.status(400).json({ success: false, error: 'এই নামটি ব্যবহার করা যাবে না, অন্য নাম দিন।' });
-    }
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    const targetDir = path.join(sitesDir, siteName);
-    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+        .menu-btn:hover {
+            background: rgba(255, 0, 127, 0.2);
+            border-color: #ff007f;
+            color: #00f2fe;
+        }
 
-    const originalName = file.originalname.toLowerCase();
-    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
-    const host = req.get('host');
+        /* Drawer */
+        .nav-drawer {
+            position: absolute;
+            top: 72px;
+            left: 0;
+            right: 0;
+            background: rgba(14, 14, 26, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 16px;
+            backdrop-filter: blur(30px);
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            z-index: 99;
+        }
 
-    // 👉 শর্ট ও ক্লিন লাইভ লিংক (যেমন: https://princeshuvo.onrender.com/sitename)
-    const liveUrl = `${protocol}://${host}/${siteName}`;
+        .nav-drawer.open { display: flex; }
 
-    // ZIP ফাইল প্রসেস
-    if (originalName.endsWith('.zip')) {
-        fs.createReadStream(file.path)
-            .pipe(unzipper.Extract({ path: targetDir }))
-            .on('close', () => {
-                fs.unlink(file.path, () => {});
-                res.json({
-                    success: true,
-                    message: 'ZIP ওয়েবসাইট সফলভাবে হোস্ট হয়েছে!',
-                    url: liveUrl
-                });
-            })
-            .on('error', (err) => {
-                fs.unlink(file.path, () => {});
-                res.status(500).json({ success: false, error: 'ZIP ফাইল আনজিপ করতে সমস্যা হয়েছে।' });
-            });
-    } 
-    // HTML ফাইল প্রসেস
-    else if (originalName.endsWith('.html') || originalName.endsWith('.htm')) {
-        const destPath = path.join(targetDir, 'index.html');
-        fs.copyFile(file.path, destPath, (err) => {
-            fs.unlink(file.path, () => {});
-            if (err) {
-                return res.status(500).json({ success: false, error: 'HTML ফাইল সেভ করতে ব্যর্থ হয়েছে।' });
-            }
-            res.json({
-                success: true,
-                message: 'HTML ফাইল সফলভাবে হোস্ট হয়েছে!',
-                url: liveUrl
-            });
+        .drawer-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: 0.25s;
+        }
+
+        .drawer-link:hover {
+            background: rgba(255, 0, 127, 0.15);
+            border-color: #ff007f;
+            color: #fff;
+        }
+
+        .drawer-link.highlight {
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+            border-color: #06b6d4;
+            color: #38bdf8;
+        }
+
+        /* Status Badge */
+        .status-pill {
+            font-size: 11px;
+            font-weight: 700;
+            color: #38ef7d;
+            background: rgba(56, 239, 125, 0.12);
+            border: 1px solid rgba(56, 239, 125, 0.35);
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            background: #38ef7d;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #38ef7d;
+            animation: dotPing 1.8s infinite;
+        }
+
+        @keyframes dotPing {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Main Card */
+        .card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 26px 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff007f, #7928ca, #00f2fe, #38ef7d);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #cbd5e1;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Mode Switcher Tabs */
+        .mode-tabs {
+            display: flex;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 4px;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 12px;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(255, 0, 127, 0.25), rgba(0, 242, 254, 0.25));
+            border: 1px solid rgba(255, 0, 127, 0.5);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed rgba(255, 0, 127, 0.4);
+            background: rgba(255, 0, 127, 0.03);
+            border-radius: 16px;
+            padding: 24px 15px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: #00f2fe;
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        .upload-area input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            font-size: 34px;
+            background: linear-gradient(45deg, #ff007f, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        /* Direct Code Textarea */
+        .code-area-box {
+            display: none;
+        }
+
+        .code-textarea {
+            width: 100%;
+            height: 180px;
+            padding: 14px;
+            background: rgba(10, 14, 28, 0.85);
+            border: 1.5px solid rgba(0, 242, 254, 0.3);
+            border-radius: 14px;
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            outline: none;
+            resize: vertical;
+            transition: 0.3s;
+        }
+
+        .code-textarea:focus {
+            border-color: #ff007f;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.35);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(45deg, #ff007f, #7928ca, #00f2fe);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 25px rgba(255, 0, 127, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 242, 254, 0.6);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Result */
+        #result {
+            margin-top: 20px;
+            display: none;
+            padding: 16px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .res-success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1.5px solid #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .res-error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1.5px solid #ef4444;
+            color: #fca5a5;
+        }
+
+        .live-link-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            word-break: break-all;
+            font-size: 13px;
+            color: #00f2fe;
+            border: 1px dashed #00f2fe;
+        }
+
+        .btn-visit {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Social Box */
+        .social-card {
+            width: 100%;
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 22px 16px;
+            text-align: center;
+        }
+
+        .social-heading {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ff758c;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .s-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .s-btn:hover { transform: translateY(-3px) scale(1.03); }
+
+        .s-yt { background: linear-gradient(45deg, #cc0000, #ff0000); }
+        .s-fb { background: linear-gradient(45deg, #1877f2, #0052cc); }
+        .s-ig { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+        .s-tt { background: linear-gradient(45deg, #000000, #25f4ee, #fe2c55); }
+        .s-tg { background: linear-gradient(45deg, #0088cc, #229ed9); }
+        .s-wa { background: linear-gradient(45deg, #128c7e, #25d366); }
+        .s-gm { background: linear-gradient(45deg, #ea4335, #c5221f); }
+
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        footer b {
+            background: linear-gradient(45deg, #ff007f, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Top Floating Navbar -->
+        <header class="top-navbar">
+            <a href="#" class="nav-brand">
+                <div class="nav-logo-box">
+                    <img src="https://cdn.imgchest.com/files/86b04a61c070.png" alt="Prince Shuvo" class="nav-logo">
+                    <div class="nav-verified-badge"><i class="fa-solid fa-check"></i></div>
+                </div>
+                <span class="nav-title">PRINCE SHUVO</span>
+            </a>
+
+            <!-- 3-Line Button -->
+            <button class="menu-btn" id="menuToggle" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <!-- Dropdown Menu Drawer -->
+            <div class="nav-drawer" id="navDrawer">
+                <a href="https://princeshuvo.page.gd" target="_blank" class="drawer-link highlight">
+                    <i class="fa-solid fa-user-astronaut"></i> Official Website (princeshuvo.page.gd) ↗
+                </a>
+                <a href="https://youtube.com/@PrinceEarningZone" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-youtube" style="color: #ff0000;"></i> YouTube Channel
+                </a>
+                <a href="https://t.me/PrinceEarningZone" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-telegram" style="color: #229ed9;"></i> Telegram Channel
+                </a>
+                <a href="https://wa.me/8801768250665" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Direct
+                </a>
+                <a href="https://www.facebook.com/share/1CLcHHhvtY/" target="_blank" class="drawer-link">
+                    <i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook Profile
+                </a>
+            </div>
+        </header>
+
+        <!-- Status Pill -->
+        <div class="status-pill">
+            <div class="live-dot"></div>
+            Free Cloud Hosting Engine Active
+        </div>
+
+        <!-- Main Card -->
+        <div class="card">
+            <h2>ওয়েবসাইট লাইভ হোস্ট করুন 🚀</h2>
+            <p>ফাইল আপলোড করুন অথবা সরাসরি HTML কোড পেস্ট করে সাইট লাইভ করুন!</p>
+
+            <!-- Tab Switcher -->
+            <div class="mode-tabs">
+                <button type="button" class="tab-btn active" id="tabUpload">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> ফাইল আপলোড
+                </button>
+                <button type="button" class="tab-btn" id="tabCode">
+                    <i class="fa-solid fa-code"></i> সরাসরি কোড লিখুন
+                </button>
+            </div>
+
+            <form id="uploadForm">
+                
+                <div class="form-group">
+                    <label for="siteName">ওয়েবসাইটের নাম (Site Identifier):</label>
+                    <input type="text" id="siteName" placeholder="যেমন: my-portfolio" required autocomplete="off">
+                </div>
+
+                <!-- Option 1: File Upload Box -->
+                <div class="form-group" id="fileGroup">
+                    <label>ওয়েবসাইট ফাইল (.HTML বা .ZIP):</label>
+                    <div class="upload-area">
+                        <input type="file" id="websiteFile" accept=".zip,.html,.htm">
+                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                        <div class="file-chosen-text" id="fileStatusText">ক্লিক করে ফাইল সিলেক্ট করুন</div>
+                        <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Single .HTML অথবা Full .ZIP প্যাকেজ</div>
+                    </div>
+                </div>
+
+                <!-- Option 2: Direct Code Editor Box -->
+                <div class="form-group code-area-box" id="codeGroup">
+                    <label for="htmlCode">আপনার HTML কোড এখানে পেস্ট বা টাইপ করুন:</label>
+                    <textarea id="htmlCode" class="code-textarea" placeholder="<!DOCTYPE html>&#10;<html>&#10;<head>&#10;  <title>My Website</title>&#10;</head>&#10;<body>&#10;  <h1>Hello World!</h1>&#10;</body>&#10;</html>"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-submit">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>এখনই হোস্ট করুন</span>
+                </button>
+
+            </form>
+
+            <div id="result"></div>
+        </div>
+
+        <!-- Colorful Social Box -->
+        <div class="social-card">
+            <div class="social-heading">
+                <i class="fa-solid fa-fire"></i> Connect with Prince Shuvo
+            </div>
+            <div class="social-buttons">
+                <a href="https://youtube.com/@PrinceEarningZone" target="_blank" class="s-btn s-yt"><i class="fa-brands fa-youtube"></i> YouTube</a>
+                <a href="https://www.facebook.com/share/1CLcHHhvtY/" target="_blank" class="s-btn s-fb"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                <a href="https://www.instagram.com/princeshuvo.official/" target="_blank" class="s-btn s-ig"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="https://www.tiktok.com/@princeshuvo.officials" target="_blank" class="s-btn s-tt"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+                <a href="https://t.me/PrinceEarningZone" target="_blank" class="s-btn s-tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                <a href="https://wa.me/8801768250665" target="_blank" class="s-btn s-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                <a href="mailto:sprinceshuvo.official@gmail.com" class="s-btn s-gm"><i class="fa-solid fa-envelope"></i> Email</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            &copy; 2026 Engine Powered by <b>PRINCE SHUVO</b>
+        </footer>
+
+    </div>
+
+    <!-- Script -->
+    <script>
+        // 3-Line Menu Drawer
+        const menuToggle = document.getElementById('menuToggle');
+        const navDrawer = document.getElementById('navDrawer');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navDrawer.classList.toggle('open');
         });
-    } 
-    else {
-        fs.unlink(file.path, () => {});
-        return res.status(400).json({ success: false, error: 'শুধুমাত্র .HTML অথবা .ZIP ফাইল সাপোর্ট করবে!' });
-    }
-});
 
-// ৩. সরাসরি ডাইনামিক শর্ট ইউআরএল রাউটিং (/sitename)
-app.get('/:siteName', (req, res, next) => {
-    const siteName = req.params.siteName.toLowerCase();
-    const sitePath = path.join(sitesDir, siteName);
+        document.addEventListener('click', (e) => {
+            if (!navDrawer.contains(e.target) && e.target !== menuToggle) {
+                navDrawer.classList.remove('open');
+            }
+        });
 
-    // ফোল্ডার থাকলে ট্রেইলিং স্ল্যাশসহ রিডাইরেক্ট করবে যাতে CSS/JS ফাইল সঠিকভাবে কাজ করে
-    if (fs.existsSync(sitePath)) {
-        return res.redirect(301, `/${siteName}/`);
-    }
-    next();
-});
+        // Tab Switching Logic
+        const tabUpload = document.getElementById('tabUpload');
+        const tabCode = document.getElementById('tabCode');
+        const fileGroup = document.getElementById('fileGroup');
+        const codeGroup = document.getElementById('codeGroup');
+        let currentMode = 'upload'; // 'upload' or 'code'
 
-// ৪. ইউজারের সাইটের সমস্ত ফাইল লাইভ সার্ভ করা
-app.use('/:siteName', (req, res, next) => {
-    const siteName = req.params.siteName.toLowerCase();
-    const sitePath = path.join(sitesDir, siteName);
+        tabUpload.addEventListener('click', () => {
+            currentMode = 'upload';
+            tabUpload.classList.add('active');
+            tabCode.classList.remove('active');
+            fileGroup.style.display = 'block';
+            codeGroup.style.display = 'none';
+        });
 
-    if (fs.existsSync(sitePath)) {
-        return express.static(sitePath)(req, res, next);
-    }
-    next();
-});
+        tabCode.addEventListener('click', () => {
+            currentMode = 'code';
+            tabCode.classList.add('active');
+            tabUpload.classList.remove('active');
+            fileGroup.style.display = 'none';
+            codeGroup.style.display = 'block';
+        });
 
-// পেছনের সাপোর্ট (/sites/sitename)
-app.use('/sites', express.static(sitesDir));
+        // File Selection Feedback
+        const fileInput = document.getElementById('websiteFile');
+        const fileStatusText = document.getElementById('fileStatusText');
 
-app.listen(PORT, () => {
-    console.log(`PRINCE SHUVO Engine active on port ${PORT}`);
-});
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const isZip = file.name.endsWith('.zip');
+                const badge = isZip ? '📦 [ZIP প্যাকেজ]' : '📄 [HTML ফাইল]';
+                fileStatusText.innerHTML = `<span style="color: #00f2fe;">${badge} ${file.name}</span>`;
+            }
+        });
+
+        // Submit API Execution
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const siteName = document.getElementById('siteName').value.trim();
+            const formData = new FormData();
+            formData.append('siteName', siteName);
+
+            if (currentMode === 'upload') {
+                const file = fileInput.files[0];
+                if (!file) {
+                    alert('দয়া করে একটি HTML অথবা ZIP ফাইল সিলেক্ট করুন!');
+                    return;
+                }
+                formData.append('websiteFile', file);
+            } else {
+                const code = document.getElementById('htmlCode').value.trim();
+                if (!code) {
+                    alert('দয়া করে আপনার HTML কোড বক্সে পেস্ট বা লিখুন!');
+                    return;
+                }
+                formData.append('htmlCode', code);
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>হোস্ট হচ্ছে, অপেক্ষা করুন...</span>';
+            resultDiv.style.display = 'none';
+
+            try {
+                const res = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                resultDiv.style.display = 'block';
+
+                if (data.success) {
+                    resultDiv.className = 'res-success';
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 16px; font-weight: 700; color: #34d399; margin-bottom: 6px;">🎉 অভিনন্দন! ওয়েবসাইট লাইভ হয়েছে!</div>
+                        <div style="font-size: 12px; color: #cbd5e1;">আপনার লাইভ ওয়েবসাইটের লিংক:</div>
+                        <div class="live-link-box">${data.url}</div>
+                        <a href="${data.url}" target="_blank" class="btn-visit">
+                            ওয়েবসাইটে যান <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    `;
+                } else {
+                    resultDiv.className = 'res-error';
+                    resultDiv.innerHTML = `⚠️ এরর: ${data.error}`;
+                }
+            } catch (err) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'res-error';
+                resultDiv.innerHTML = '⚠️ সার্ভারের সাথে সংযোগ করা যায়নি!';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-bolt"></i> <span>এখনই হোস্ট করুন</span>';
+            }
+        });
+    </script>
+</body>
+</html>
