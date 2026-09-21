@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRINCE SHUVO | Free Web Hosting Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        /* Header / Logo */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .logo-box {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff007f, #7928ca);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+        }
+        .brand-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #ff007f, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Card Container */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .card p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #cbd5e1;
+        }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #ff007f;
+        }
+        input[type="file"] {
+            cursor: pointer;
+            color: #94a3b8;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #ff007f, #7928ca);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        /* Result Box */
+        #result {
+            margin-top: 20px;
+            display: none;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        .success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            color: #34d399;
+        }
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #f87171;
+        }
+        .live-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo & Brand Header -->
+    <div class="brand">
+        <div class="logo-box">PS</div>
+        <div class="brand-title">PRINCE SHUVO</div>
+    </div>
+
+    <!-- Upload Card -->
+    <div class="card">
+        <h2>ওয়েবসাইট হোস্ট করুন</h2>
+        <p>আপনার HTML, CSS ও JS ফাইলগুলো একটি <b>.ZIP</b> ফাইলে কনভার্ট করে আপলোড করুন। সাইট সাথে সাথে লাইভ হয়ে যাবে!</p>
+
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="siteName">ওয়েবসাইটের নাম (Site Name):</label>
+                <input type="text" id="siteName" placeholder="যেমন: my-portfolio" required />
+            </div>
+
+            <div class="form-group">
+                <label for="websiteZip">ওয়েবসাইটের ZIP ফাইল:</label>
+                <input type="file" id="websiteZip" accept=".zip" required />
+            </div>
+
+            <button type="submit" id="submitBtn">এখনই হোস্ট করুন 🚀</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <footer>
+        &copy; 2026 Powered by <b>PRINCE SHUVO</b> Hosting Engine
+    </footer>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const siteName = document.getElementById('siteName').value;
+            const fileInput = document.getElementById('websiteZip');
+
+            if (!fileInput.files[0]) return;
+
+            const formData = new FormData();
+            formData.append('siteName', siteName);
+            formData.append('websiteZip', fileInput.files[0]);
+
+            submitBtn.innerText = 'আপলোড ও প্রসেসিং হচ্ছে...';
+            submitBtn.disabled = true;
+            resultDiv.style.display = 'none';
+
+            try {
+                const res = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                resultDiv.style.display = 'block';
+
+                if (data.success) {
+                    resultDiv.className = 'success';
+                    resultDiv.innerHTML = `
+                        🎉 <b>অভিনন্দন!</b> আপনার ওয়েবসাইট লাইভ হয়ে গেছে!<br><br>
+                        <b>লিঙ্ক:</b> ${data.url}<br>
+                        <a href="${data.url}" target="_blank" class="live-btn">ওয়েবসাইটে যান ↗</a>
+                    `;
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `⚠️ এরর: ${data.error}`;
+                }
+            } catch (err) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = '⚠️ সার্ভারের সাথে যোগাযোগ করা যায়নি!';
+            } finally {
+                submitBtn.innerText = 'এখনই হোস্ট করুন 🚀';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
